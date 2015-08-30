@@ -1,5 +1,5 @@
 # MyAnimeList Api for Java
-[![Circle CI](https://circleci.com/gh/v4lproik/googlanime/tree/master.svg?style=shield)](https://circleci.com/gh/v4lproik/googlanime/tree/master)
+[![Circle CI](https://circleci.com/gh/v4lproik/myanimelist-api/tree/master.svg?style=svg)](https://circleci.com/gh/v4lproik/myanimelist-api/tree/master)
 
 **myanielist-api** is a java api that extracts information from myanimelist.net
 
