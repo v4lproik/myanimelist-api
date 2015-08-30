@@ -1,7 +1,8 @@
 package net.v4lproik.myanimelist.impl;
 
-import net.v4lproik.myanimelist.api.ImportOptions;
-import net.v4lproik.myanimelist.entities.MyAnimeListEntry;
+import net.v4lproik.myanimelist.api.impl.AnimeMangaInformation;
+import net.v4lproik.myanimelist.api.models.TypeEnum;
+import net.v4lproik.myanimelist.entities.Entry;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,25 +20,23 @@ import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MyAnimeListUTest {
-
+public class AnimeMangaInformationTest {
     // Grab new data straight from myanimelist
     private final Boolean CRAWL_WEBSITE = false;
 
     @Spy
-    private MyAnimeList myAnimeList;
+    private AnimeMangaInformation service;
 
     @Test
     public void testCrawlById_withGoodOptionsAnime_shouldBeOK() throws Exception {
         // Given
-        ImportOptions options = new ImportOptions(2904, "anime", false);
-        String type = options.getType();
-        Integer id = options.getId();
-        String url = myAnimeList.createEntryURL(id, type);
+        TypeEnum type = TypeEnum.ANIME;
+        Integer id = 2904;
+        String url = service.createEntryURL(id, type);
 
         Document doc = null;
         if (CRAWL_WEBSITE){
-            doc = myAnimeList.getResultFromJSoup("http://myanimelist.net/anime/2904/", "anime");
+            doc = service.getResultFromJSoup("http://myanimelist.net/anime/2904/", "anime");
             if (doc != null){
                 Files.write(Paths.get("src/test/resource/code-geass-r2.anime"), doc.html().getBytes());
             }else{
@@ -48,10 +47,10 @@ public class MyAnimeListUTest {
         File input = new File("src/test/resource/code-geass-r2.anime");
         doc = Jsoup.parse(input, "UTF-8", url);
 
-        doReturn(doc).when(myAnimeList).getResultFromJSoup(url, type);
+        doReturn(doc).when(service).getResultFromJSoup(url, type.toString());
 
         // When
-        MyAnimeListEntry response = myAnimeList.crawlById(options);
+        Entry response = service.crawl(id, type);
 
 
         //Then
@@ -79,14 +78,13 @@ public class MyAnimeListUTest {
     @Test
     public void testCrawlById_withGoodOptionsManga_shouldBeOK() throws Exception {
         // Given
-        ImportOptions options = new ImportOptions(11, "manga", false);
-        String type = options.getType();
-        final Integer id = options.getId();
-        String url = myAnimeList.createEntryURL(id, type);
+        TypeEnum type = TypeEnum.MANGA;
+        final Integer id = 11;
+        String url = service.createEntryURL(id, type);
 
         Document doc = null;
         if (CRAWL_WEBSITE){
-            doc = myAnimeList.getResultFromJSoup("http://myanimelist.net/manga/11/", "manga");
+            doc = service.getResultFromJSoup("http://myanimelist.net/manga/11/", "manga");
             if (doc != null){
                 Files.write(Paths.get("src/test/resource/naruto.manga"), doc.html().getBytes());
             }else{
@@ -97,10 +95,10 @@ public class MyAnimeListUTest {
         File input = new File("src/test/resource/naruto.manga");
         doc = Jsoup.parse(input, "UTF-8", url);
 
-        doReturn(doc).when(myAnimeList).getResultFromJSoup(url, type);
+        doReturn(doc).when(service).getResultFromJSoup(url, type.toString());
 
         // When
-        MyAnimeListEntry response = myAnimeList.crawlById(options);
+        Entry response = service.crawl(id, type);
 
         //Then
         assertEquals("Naruto", response.getTitle());
@@ -125,68 +123,35 @@ public class MyAnimeListUTest {
     @Test(expected = IOException.class)
     public void testCrawlById_withGoodOptions_withNoDataToCrawl_shouldThrowIOException() throws Exception {
         // Given
-        ImportOptions options = new ImportOptions(5081, "anime", false);
-        String type = options.getType();
-        final Integer id = options.getId();
-        String url = myAnimeList.createEntryURL(id, type);
+        TypeEnum type = TypeEnum.ANIME;
+        final Integer id = 5081;
+        String url = service.createEntryURL(id, type);
 
-        doReturn(null).when(myAnimeList).getResultFromJSoup(url, type);
+        doReturn(null).when(service).getResultFromJSoup(url, type.toString());
 
         // When
-        MyAnimeListEntry response = myAnimeList.crawlById(options);
+        Entry response = service.crawl(id, type);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testCrawlById_withMissingOptions_shouldThrowIllegalArgumentException() throws Exception {
         // Given
-        ImportOptions options = new ImportOptions(11, null, false);
-        String type = options.getType();
-        final Integer id = options.getId();
+        TypeEnum type = null;
+        final Integer id = 5081;
+        String url = service.createEntryURL(id, type);
 
         // When
-        MyAnimeListEntry response = myAnimeList.crawlById(options);
+        Entry response = service.crawl(id, type);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testCrawlById_withEmptyOptions_shouldThrowIllegalArgumentException() throws Exception {
+    public void testCrawlById_withIllegalIntegerOptions_shouldThrowIllegalArgumentException() throws Exception {
         // Given
-        ImportOptions options = new ImportOptions(11, "", false);
-        String type = options.getType();
-        final String id = options.getId().toString();
+        TypeEnum type = TypeEnum.ANIME;
+        final Integer id = -1;
+        String url = service.createEntryURL(id, type);
 
         // When
-        MyAnimeListEntry response = myAnimeList.crawlById(options);
-    }
-
-    @Test
-    public void test_crawlCharacter_shouldBeOK() throws Exception {
-        // Given
-        ImportOptions options = new ImportOptions(11, "manga", false);
-        String type = options.getType();
-        final Integer id = options.getId();
-        String url = myAnimeList.createEntryURL(id, type);
-
-        File input = new File("src/test/resource/naruto.manga");
-        Document doc = Jsoup.parse(input, "UTF-8", url);
-
-        doReturn(doc).when(myAnimeList).getResultFromJSoup(url, type);
-
-        // When
-        MyAnimeListEntry response = myAnimeList.crawlById(options);
-
-
-        input = new File("src/test/resource/naruto-uzumaki.character");
-        doc = Jsoup.parse(input, "UTF-8", url);
-
-
-        Integer idCharacter = response.getCharacters().get(0).getId();
-        url = myAnimeList.createCharacterURL(idCharacter);
-
-        myAnimeList.scrapCharacter(doc, url, response.getCharacters().get(0));
-
-        //Then
-        assertEquals("Naruto", response.getTitle());
-        assertEquals("http://cdn.myanimelist.net/images/manga/3/117681.jpg", response.getPosterImage());
-        assertEquals("うずまきナルト", response.getCharacters().get(0).getJapaneseName());
+        Entry response = service.crawl(id, type);
     }
 }

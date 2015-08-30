@@ -1,7 +1,7 @@
 # MyAnimeList Api for Java
 [![Circle CI](https://circleci.com/gh/v4lproik/myanimelist-api/tree/master.svg?style=svg)](https://circleci.com/gh/v4lproik/myanimelist-api/tree/master)
 
-**myanielist-api** is a java api that extracts information from myanimelist.net
+**myanimelist-api** is a java api that extracts information from myanimelist.net
 
 This project aims to ease getting information from myanimelist.net.
 

@@ -3,7 +3,7 @@ package net.v4lproik.myanimelist.entities;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class MyAnimeListAuthor {
+public class Character {
 
     private Integer id;
 
@@ -11,18 +11,11 @@ public class MyAnimeListAuthor {
 
     private String lastName;
 
-    private String[] job;
+    private String japaneseName;
 
-    public MyAnimeListAuthor() {
-    }
+    private String role;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private String[] nickNames;
 
     public String getFirstName() {
         return firstName;
@@ -40,14 +33,37 @@ public class MyAnimeListAuthor {
         this.lastName = lastName;
     }
 
-    public String[] getJob() {
-        return job;
+    public String getRole() {
+        return role;
     }
 
-    public void setJob(String[] job) {
-        this.job = job;
+    public void setRole(String role) {
+        this.role = role;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getJapaneseName() {
+        return japaneseName;
+    }
+
+    public void setJapaneseName(String japaneseName) {
+        this.japaneseName = japaneseName;
+    }
+
+    public String[] getNickNames() {
+        return nickNames;
+    }
+
+    public void setNickNames(String[] nickNames) {
+        this.nickNames = nickNames;
+    }
 
     @Override
     public String toString() {
@@ -55,7 +71,9 @@ public class MyAnimeListAuthor {
                 .append("id", id)
                 .append("firstName", firstName)
                 .append("lastName", lastName)
-                .append("job", job)
+                .append("japaneseName", japaneseName)
+                .append("role", role)
+                .append("nickNames", nickNames)
                 .toString();
     }
 }

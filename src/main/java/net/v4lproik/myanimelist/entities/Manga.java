@@ -3,7 +3,7 @@ package net.v4lproik.myanimelist.entities;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class MyAnimeListManga extends MyAnimeListEntry{
+public class Manga extends Entry {
 
     private Integer nbVolumes;
 
@@ -11,13 +11,13 @@ public class MyAnimeListManga extends MyAnimeListEntry{
 
     private String serialization;
 
-    public MyAnimeListManga(Integer nbVolumes, Integer mbChapters, String serialization) {
+    public Manga(Integer nbVolumes, Integer mbChapters, String serialization) {
         this.nbVolumes = nbVolumes;
         this.mbChapters = mbChapters;
         this.serialization = serialization;
     }
 
-    public MyAnimeListManga(Integer id) {
+    public Manga(Integer id) {
         super(id);
         setType("manga");
     }

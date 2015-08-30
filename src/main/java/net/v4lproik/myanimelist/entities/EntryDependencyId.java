@@ -2,7 +2,7 @@ package net.v4lproik.myanimelist.entities;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class MyAnimeListEntryDependencyId {
+public class EntryDependencyId {
 
     private int id;
 
@@ -10,10 +10,10 @@ public class MyAnimeListEntryDependencyId {
 
     private String type;
 
-    public MyAnimeListEntryDependencyId() {
+    public EntryDependencyId() {
     }
 
-    public MyAnimeListEntryDependencyId(int id) {
+    public EntryDependencyId(int id) {
         this.id = id;
     }
 

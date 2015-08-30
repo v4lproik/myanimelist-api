@@ -3,7 +3,7 @@ package net.v4lproik.myanimelist.entities;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class MyAnimeListAnimeDependency extends MyAnimeListEntryDependency{
+public class Anime extends Entry {
 
     private String[] producers;
 
@@ -13,12 +13,12 @@ public class MyAnimeListAnimeDependency extends MyAnimeListEntryDependency{
 
     private String showType;
 
-    public MyAnimeListAnimeDependency(Integer id) {
+    public Anime(Integer id) {
         super(id);
         setType("anime");
     }
 
-    public MyAnimeListAnimeDependency() {
+    public Anime() {
     }
 
     public String[] getProducers() {

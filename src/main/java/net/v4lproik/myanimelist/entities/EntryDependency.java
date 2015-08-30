@@ -1,74 +1,71 @@
 package net.v4lproik.myanimelist.entities;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public abstract class MyAnimeListEntry {
+public abstract class EntryDependency {
 
-    private Integer id;
+    protected Integer id;
 
-    private String type;
+    protected String type;
 
-    private String title;
+    protected String title;
 
-    private String background;
+    protected String[] synonyms;
 
-    private String[] synonyms;
+    protected String englishTitle;
 
-    private String englishTitle;
+    protected String japaneseTitle;
 
-    private String japaneseTitle;
+    protected String synopsis;
 
-    private String synopsis;
+    protected String startedAiringDate;
 
-    private String startedAiringDate;
+    protected String finishedAiringDate;
 
-    private String finishedAiringDate;
+    protected String rank;
 
-    private String rank;
+    protected String popularity;
 
-    private String popularity;
+    protected String score;
 
-    private String score;
+    protected String[] genres;
 
-    private String[] genres;
+    protected String ageRating;
 
-    private String ageRating;
+    protected String posterImage;
 
-    private String posterImage;
+    protected Entry parent;
 
-    private MyAnimeListEntry parent;
+    protected List<Author> authors = new ArrayList<Author>();
 
-    private List<MyAnimeListAuthor> authors = new ArrayList<MyAnimeListAuthor>();
+    protected String[] tags;
 
-    private String[] tags;
+    protected List<EntryDependencyId> sequels = new ArrayList<EntryDependencyId>();
 
-    private List<MyAnimeListEntry> sequels = new ArrayList<MyAnimeListEntry>();
+    protected List<EntryDependencyId> alternativeVersions = new ArrayList<EntryDependencyId>();
 
-    private List<MyAnimeListEntry> alternativeVersions = new ArrayList<MyAnimeListEntry>();
+    protected List<EntryDependencyId> prequels = new ArrayList<EntryDependencyId>();
 
-    private List<MyAnimeListEntry> prequels = new ArrayList<MyAnimeListEntry>();
+    protected List<EntryDependencyId> spinoff = new ArrayList<EntryDependencyId>();
 
-    private List<MyAnimeListEntry> spinoff = new ArrayList<MyAnimeListEntry>();
+    protected List<EntryDependencyId> sideStories = new ArrayList<EntryDependencyId>();
 
-    private List<MyAnimeListEntry> sideStories = new ArrayList<MyAnimeListEntry>();
+    protected List<EntryDependencyId> others = new ArrayList<EntryDependencyId>();
 
-    private List<MyAnimeListEntry> others = new ArrayList<MyAnimeListEntry>();
+    protected List<EntryDependencyId> summaries = new ArrayList<EntryDependencyId>();
 
-    private List<MyAnimeListEntry> summaries = new ArrayList<MyAnimeListEntry>();
+    protected List<EntryDependencyId> adaptations = new ArrayList<EntryDependencyId>();
 
-    private List<MyAnimeListEntry> adaptations = new ArrayList<MyAnimeListEntry>();
+    protected List<EntryDependencyId> parentStories = new ArrayList<EntryDependencyId>();
 
-//    private List<MyAnimeListEntry> parentStories = new ArrayList<MyAnimeListEntry>();
+    protected List<Character> characters = new ArrayList<Character>();
 
-    private List<MyAnimeListCharacter> characters = new ArrayList<MyAnimeListCharacter>();
-
-    public MyAnimeListEntry(Integer id) {
+    public EntryDependency(Integer id) {
 
         if (id <= 0){
             throw new NumberFormatException("An entry id cannot be <= 0");
@@ -77,7 +74,7 @@ public abstract class MyAnimeListEntry {
         this.id = id;
     }
 
-    public MyAnimeListEntry() {
+    public EntryDependency() {
     }
 
     public Integer getId() {
@@ -200,83 +197,83 @@ public abstract class MyAnimeListEntry {
         this.tags = tags;
     }
 
-    public List<MyAnimeListCharacter> getCharacters() {
+    public List<Character> getCharacters() {
         return characters;
     }
 
-    public void setCharacters(List<MyAnimeListCharacter> characters) {
+    public void setCharacters(List<Character> characters) {
         this.characters = characters;
     }
 
-    public List<MyAnimeListAuthor> getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<MyAnimeListAuthor> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 
-    public List<MyAnimeListEntry> getSequels() {
+    public List<EntryDependencyId> getSequels() {
         return sequels;
     }
 
-    public void setSequels(List<MyAnimeListEntry> sequels) {
+    public void setSequels(List<EntryDependencyId> sequels) {
         this.sequels = sequels;
     }
 
-    public List<MyAnimeListEntry> getAlternativeVersions() {
+    public List<EntryDependencyId> getAlternativeVersions() {
         return alternativeVersions;
     }
 
-    public void setAlternativeVersions(List<MyAnimeListEntry> alternativeVersions) {
+    public void setAlternativeVersions(List<EntryDependencyId> alternativeVersions) {
         this.alternativeVersions = alternativeVersions;
     }
 
-    public List<MyAnimeListEntry> getPrequels() {
+    public List<EntryDependencyId> getPrequels() {
         return prequels;
     }
 
-    public void setPrequels(List<MyAnimeListEntry> prequels) {
+    public void setPrequels(List<EntryDependencyId> prequels) {
         this.prequels = prequels;
     }
 
-    public List<MyAnimeListEntry> getSpinoff() {
+    public List<EntryDependencyId> getSpinoff() {
         return spinoff;
     }
 
-    public void setSpinoff(List<MyAnimeListEntry> spinoff) {
+    public void setSpinoff(List<EntryDependencyId> spinoff) {
         this.spinoff = spinoff;
     }
 
-    public List<MyAnimeListEntry> getSideStories() {
+    public List<EntryDependencyId> getSideStories() {
         return sideStories;
     }
 
-    public void setSideStories(List<MyAnimeListEntry> sideStories) {
+    public void setSideStories(List<EntryDependencyId> sideStories) {
         this.sideStories = sideStories;
     }
 
-    public List<MyAnimeListEntry> getOthers() {
+    public List<EntryDependencyId> getOthers() {
         return others;
     }
 
-    public void setOthers(List<MyAnimeListEntry> others) {
+    public void setOthers(List<EntryDependencyId> others) {
         this.others = others;
     }
 
-    public List<MyAnimeListEntry> getSummaries() {
+    public List<EntryDependencyId> getSummaries() {
         return summaries;
     }
 
-    public void setSummaries(List<MyAnimeListEntry> summaries) {
+    public void setSummaries(List<EntryDependencyId> summaries) {
         this.summaries = summaries;
     }
 
-    public List<MyAnimeListEntry> getAdaptations() {
+    public List<EntryDependencyId> getAdaptations() {
         return adaptations;
     }
 
-    public void setAdaptations(List<MyAnimeListEntry> adaptations) {
+    public void setAdaptations(List<EntryDependencyId> adaptations) {
         this.adaptations = adaptations;
     }
 
@@ -288,40 +285,36 @@ public abstract class MyAnimeListEntry {
         this.type = type;
     }
 
-    public MyAnimeListEntry getParent() {
+    public Entry getParent() {
         return parent;
     }
 
-    public void setParent(MyAnimeListEntry parent) {
+    public void setParent(Entry parent) {
         this.parent = parent;
     }
 
-    public String getBackground() {
-        return background;
+    public List<EntryDependencyId> getParentStories() {
+        return parentStories;
     }
 
-    public void setBackground(String background) {
-        this.background = background;
+    public void setParentStories(List<EntryDependencyId> parentStories) {
+        this.parentStories = parentStories;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-
         if (o == null || getClass() != o.getClass()) return false;
-
-        MyAnimeListEntry that = (MyAnimeListEntry) o;
-
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .isEquals();
+        EntryDependency that = (EntryDependency) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(type, that.type) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(rank, that.rank);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .toHashCode();
+        return Objects.hash(id, type, title, rank);
     }
 
     @Override
@@ -330,7 +323,6 @@ public abstract class MyAnimeListEntry {
                 .append("id", id)
                 .append("type", type)
                 .append("title", title)
-                .append("background", background)
                 .append("synonyms", synonyms)
                 .append("englishTitle", englishTitle)
                 .append("japaneseTitle", japaneseTitle)

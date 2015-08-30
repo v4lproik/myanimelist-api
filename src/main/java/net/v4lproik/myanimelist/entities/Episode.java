@@ -1,6 +1,6 @@
 package net.v4lproik.myanimelist.entities;
 
-public class MyAnimeListEpisode {
+public class Episode {
 
     private Integer id;
 
