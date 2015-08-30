@@ -5,7 +5,6 @@ import net.v4lproik.myanimelist.api.models.TypeEnum;
 import net.v4lproik.myanimelist.entities.*;
 import net.v4lproik.myanimelist.entities.Character;
 import org.apache.commons.beanutils.BeanUtils;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,8 +16,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-import static org.apache.commons.lang3.StringUtils.countMatches;
-
 public class AnimeMangaInformation extends AbstractInformation implements AnimeManga {
     List<Integer> animeScrapped = new ArrayList<Integer>();
     List<Integer> animeErrorScrapped = new ArrayList<Integer>();
@@ -29,26 +26,6 @@ public class AnimeMangaInformation extends AbstractInformation implements AnimeM
 
     EntryFactory entityFactory = new EntryFactory();
     EntryDependencyFactory entityFactoryDependency = new EntryDependencyFactory();
-
-    @Deprecated
-    public Anime crawl(String name, TypeEnum typeEnum) throws IOException {
-        Anime anime = new Anime();
-
-        final String type = typeEnum.toString();
-        final String url = DOMAIN + type + ".php?q=" + name;
-
-        log.debug("Trying to get result from " + url);
-
-        final Connection.Response response = Jsoup.connect(url).userAgent(USER_AGENT).execute();
-
-        //get list or anime ?
-        if(response.url().toString().startsWith(DOMAIN + type + "/") && countMatches(response.url().toString(), "/") == 5){
-            Document doc = response.parse();
-            scrapGeneralInformation(doc, url, type, null);
-        }
-
-        return anime;
-    }
 
     public Entry crawl(Integer id, TypeEnum typeEnum) throws IOException {
 

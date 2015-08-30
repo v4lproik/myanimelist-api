@@ -12,8 +12,6 @@ public interface AnimeManga {
     // Anime or manga
     //-----------------
 
-    Entry crawl(String name, TypeEnum type) throws IOException;
-
     Entry crawl(Integer id, TypeEnum type) throws IOException;
 
     Set<EntryDependency> crawlAndDependencies(Integer id, TypeEnum type) throws IOException;
