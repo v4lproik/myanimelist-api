@@ -76,6 +76,39 @@ public class AnimeMangaInformationTest {
     }
 
     @Test
+    public void testCrawlById_withGoodOptionsAnime2_shouldBeOK() throws Exception {
+        // Given
+        TypeEnum type = TypeEnum.ANIME;
+        Integer id = 20;
+        String url = service.createEntryURL(id, type);
+
+        Document doc = null;
+        if (CRAWL_WEBSITE){
+            doc = service.getResultFromJSoup("http://myanimelist.net/anime/20/", "anime");
+            if (doc != null){
+                Files.write(Paths.get("src/test/resource/naruto.anime"), doc.html().getBytes());
+            }else{
+                throw new IOException("Unit Test cannot be performed");
+            }
+        }
+
+        File input = new File("src/test/resource/naruto.anime");
+        doc = Jsoup.parse(input, "UTF-8", url);
+
+        doReturn(doc).when(service).getResultFromJSoup(url, type.toString());
+
+        // When
+        Entry response = service.crawl(id, type);
+
+
+        //Then
+        assertEquals("Naruto", response.getTitle());
+        assertEquals("20", response.getId().toString());
+        assertEquals("anime", response.getType());
+    }
+
+
+    @Test
     public void testCrawlById_withGoodOptionsManga_shouldBeOK() throws Exception {
         // Given
         TypeEnum type = TypeEnum.MANGA;

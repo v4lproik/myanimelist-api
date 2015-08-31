@@ -28,10 +28,6 @@ public class AnimeMangaInformation extends AbstractInformation implements AnimeM
     EntryDependencyFactory entityFactoryDependency = new EntryDependencyFactory();
 
     public Entry crawl(Integer id, TypeEnum typeEnum) throws IOException {
-
-        final String type = typeEnum.toString();
-        final Boolean dependency = false;
-
         if (id == null) {
             throw new IllegalArgumentException("Both type and id argument cannot be null");
         }
@@ -40,22 +36,16 @@ public class AnimeMangaInformation extends AbstractInformation implements AnimeM
             throw new IllegalArgumentException("Both type and id argument cannot be empty");
         }
 
+        final String type = typeEnum.toString();
+        final String url = createEntryURL(id, typeEnum);
+        final Document doc = this.getResultFromJSoup(url, type);
         root = entityFactory.getEntity(type, id);
 
-        if (!dependency){
-
-            String url = createEntryURL(id, typeEnum);
-            Document doc = this.getResultFromJSoup(url, type);
-
-            if (doc == null)
-                throw new IOException(String.format("No data fetched for url %s", url));
-
-            scrapGeneralInformation(doc, url, type, root);
-
-            return root;
+        if (doc == null) {
+            throw new IOException(String.format("No data fetched for url %s", url));
         }
 
-        letsScrap(root);
+        scrapGeneralInformation(doc, url, type, root);
 
         return root;
     }
@@ -359,10 +349,18 @@ public class AnimeMangaInformation extends AbstractInformation implements AnimeM
         entry.setType(type);
 
         //get main title
-        entry.setTitle(doc.select("h1").first().childNode(2).childNodes().get(0).toString());
+        try {
+            entry.setTitle(getMainTitle(doc));
+        }catch (Exception e){
+            log.debug("Cannot parse main title", e);
+        }
 
         //get image
-        entry.setPosterImage(doc.select("meta[property=og:image]").attr("content"));
+        try {
+            entry.setPosterImage(getPosterImageLink(doc));
+        }catch (Exception e){
+            log.debug("Cannot parse poster image link", e);
+        }
 
         //parse for general information
         Elements tds = doc.select("td");
@@ -626,6 +624,15 @@ public class AnimeMangaInformation extends AbstractInformation implements AnimeM
         }
 
         return entry;
+    }
+
+    private String getPosterImageLink(Document doc) {
+        return doc.select("meta[property=og:image]").attr("content");
+    }
+
+    private String getMainTitle(Document doc) {
+        Element firstH1 = doc.select("h1").first();
+        return firstH1.childNodes().get(2).childNodes().get(0).toString();
     }
 
     private List<Author> getAuthorsBasicInfo(Element h2) {
