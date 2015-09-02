@@ -1,16 +1,19 @@
 package com.github.v4lproik.myanimelist.api.impl;
 
-import com.github.v4lproik.myanimelist.api.Character;
+import com.github.v4lproik.myanimelist.api.UnitCrawler;
+import com.github.v4lproik.myanimelist.api.models.Character;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Set;
 
-public class CharacterInformation extends AbstractInformation implements Character {
+public class CharacterCrawler extends AbstractCrawler<Character> implements UnitCrawler<Character> {
 
     public final String CHARACTER_TYPE = "character";
 
-    public com.github.v4lproik.myanimelist.entities.Character crawl(Integer id) throws IOException {
+    @Override
+    public Character crawl(Integer id) throws IOException {
 
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
@@ -31,14 +34,19 @@ public class CharacterInformation extends AbstractInformation implements Charact
         return scrapCharacter(doc, null);
     }
 
-    private com.github.v4lproik.myanimelist.entities.Character scrapCharacter(Document doc, com.github.v4lproik.myanimelist.entities.Character character){
+    @Override
+    public Set<Character> crawl(Integer id, Boolean dependency) throws IOException {
+        return null;
+    }
+
+    private Character scrapCharacter(Document doc, Character character){
 
         if (doc == null){
             throw new IllegalArgumentException("Document cannot be null");
         }
 
         if (character == null){
-            character = new com.github.v4lproik.myanimelist.entities.Character();
+            character = new Character();
         }
 
         Elements base = doc.body().select("#myanimelist").select("#contentWrapper");

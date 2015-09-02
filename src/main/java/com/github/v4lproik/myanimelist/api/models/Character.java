@@ -1,9 +1,9 @@
-package com.github.v4lproik.myanimelist.entities;
+package com.github.v4lproik.myanimelist.api.models;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class Character {
+public class Character extends Item{
 
     private Integer id;
 

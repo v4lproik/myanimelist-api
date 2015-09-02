@@ -1,6 +1,6 @@
-package com.github.v4lproik.myanimelist.entities;
+package com.github.v4lproik.myanimelist.api.models;
 
-public class Episode {
+public class Episode extends Item{
 
     private Integer id;
 

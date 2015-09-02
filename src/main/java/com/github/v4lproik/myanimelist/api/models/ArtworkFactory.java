@@ -1,12 +1,10 @@
-package com.github.v4lproik.myanimelist.entities;
+package com.github.v4lproik.myanimelist.api.models;
 
-import com.github.v4lproik.myanimelist.api.models.TypeEnum;
+public class ArtworkFactory {
 
-public class EntryFactory {
+    public ArtWork getEntity(String type, Integer id){
 
-    public Entry getEntity(String type, Integer id){
-
-        Entry entry;
+        ArtWork artWork;
 
         TypeEnum typeEnum = TypeEnum.fromValue(type);
 
@@ -16,17 +14,18 @@ public class EntryFactory {
 
         switch (typeEnum){
             case MANGA:
-                entry = new Manga(id);
+                artWork = new Manga(id);
                 break;
 
             case ANIME:
-                entry = new Anime(id);
+                artWork = new Anime(id);
                 break;
 
             default:
                 throw new IllegalArgumentException();
         }
 
-        return entry;
+        artWork.setType(type);
+        return artWork;
     }
 }

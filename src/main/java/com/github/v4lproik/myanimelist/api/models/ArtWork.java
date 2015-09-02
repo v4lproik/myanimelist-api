@@ -1,4 +1,4 @@
-package com.github.v4lproik.myanimelist.entities;
+package com.github.v4lproik.myanimelist.api.models;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class EntryDependency {
+public abstract class ArtWork extends Item{
 
     protected Integer id;
 
@@ -22,6 +22,8 @@ public abstract class EntryDependency {
     protected String japaneseTitle;
 
     protected String synopsis;
+
+    protected String background;
 
     protected String startedAiringDate;
 
@@ -39,33 +41,33 @@ public abstract class EntryDependency {
 
     protected String posterImage;
 
-    protected Entry parent;
+    protected ArtWork parent;
 
     protected List<Author> authors = new ArrayList<Author>();
 
     protected String[] tags;
 
-    protected List<EntryDependencyId> sequels = new ArrayList<EntryDependencyId>();
+    protected List<ArtworkId> sequels = new ArrayList<ArtworkId>();
 
-    protected List<EntryDependencyId> alternativeVersions = new ArrayList<EntryDependencyId>();
+    protected List<ArtworkId> alternativeVersions = new ArrayList<ArtworkId>();
 
-    protected List<EntryDependencyId> prequels = new ArrayList<EntryDependencyId>();
+    protected List<ArtworkId> prequels = new ArrayList<ArtworkId>();
 
-    protected List<EntryDependencyId> spinoff = new ArrayList<EntryDependencyId>();
+    protected List<ArtworkId> spinoff = new ArrayList<ArtworkId>();
 
-    protected List<EntryDependencyId> sideStories = new ArrayList<EntryDependencyId>();
+    protected List<ArtworkId> sideStories = new ArrayList<ArtworkId>();
 
-    protected List<EntryDependencyId> others = new ArrayList<EntryDependencyId>();
+    protected List<ArtworkId> others = new ArrayList<ArtworkId>();
 
-    protected List<EntryDependencyId> summaries = new ArrayList<EntryDependencyId>();
+    protected List<ArtworkId> summaries = new ArrayList<ArtworkId>();
 
-    protected List<EntryDependencyId> adaptations = new ArrayList<EntryDependencyId>();
+    protected List<ArtworkId> adaptations = new ArrayList<ArtworkId>();
 
-    protected List<EntryDependencyId> parentStories = new ArrayList<EntryDependencyId>();
+    protected List<ArtworkId> parentStories = new ArrayList<ArtworkId>();
 
     protected List<Character> characters = new ArrayList<Character>();
 
-    public EntryDependency(Integer id) {
+    public ArtWork(Integer id) {
 
         if (id <= 0){
             throw new NumberFormatException("An entry id cannot be <= 0");
@@ -74,7 +76,7 @@ public abstract class EntryDependency {
         this.id = id;
     }
 
-    public EntryDependency() {
+    public ArtWork() {
     }
 
     public Integer getId() {
@@ -213,67 +215,67 @@ public abstract class EntryDependency {
         this.authors = authors;
     }
 
-    public List<EntryDependencyId> getSequels() {
+    public List<ArtworkId> getSequels() {
         return sequels;
     }
 
-    public void setSequels(List<EntryDependencyId> sequels) {
+    public void setSequels(List<ArtworkId> sequels) {
         this.sequels = sequels;
     }
 
-    public List<EntryDependencyId> getAlternativeVersions() {
+    public List<ArtworkId> getAlternativeVersions() {
         return alternativeVersions;
     }
 
-    public void setAlternativeVersions(List<EntryDependencyId> alternativeVersions) {
+    public void setAlternativeVersions(List<ArtworkId> alternativeVersions) {
         this.alternativeVersions = alternativeVersions;
     }
 
-    public List<EntryDependencyId> getPrequels() {
+    public List<ArtworkId> getPrequels() {
         return prequels;
     }
 
-    public void setPrequels(List<EntryDependencyId> prequels) {
+    public void setPrequels(List<ArtworkId> prequels) {
         this.prequels = prequels;
     }
 
-    public List<EntryDependencyId> getSpinoff() {
+    public List<ArtworkId> getSpinoff() {
         return spinoff;
     }
 
-    public void setSpinoff(List<EntryDependencyId> spinoff) {
+    public void setSpinoff(List<ArtworkId> spinoff) {
         this.spinoff = spinoff;
     }
 
-    public List<EntryDependencyId> getSideStories() {
+    public List<ArtworkId> getSideStories() {
         return sideStories;
     }
 
-    public void setSideStories(List<EntryDependencyId> sideStories) {
+    public void setSideStories(List<ArtworkId> sideStories) {
         this.sideStories = sideStories;
     }
 
-    public List<EntryDependencyId> getOthers() {
+    public List<ArtworkId> getOthers() {
         return others;
     }
 
-    public void setOthers(List<EntryDependencyId> others) {
+    public void setOthers(List<ArtworkId> others) {
         this.others = others;
     }
 
-    public List<EntryDependencyId> getSummaries() {
+    public List<ArtworkId> getSummaries() {
         return summaries;
     }
 
-    public void setSummaries(List<EntryDependencyId> summaries) {
+    public void setSummaries(List<ArtworkId> summaries) {
         this.summaries = summaries;
     }
 
-    public List<EntryDependencyId> getAdaptations() {
+    public List<ArtworkId> getAdaptations() {
         return adaptations;
     }
 
-    public void setAdaptations(List<EntryDependencyId> adaptations) {
+    public void setAdaptations(List<ArtworkId> adaptations) {
         this.adaptations = adaptations;
     }
 
@@ -285,19 +287,27 @@ public abstract class EntryDependency {
         this.type = type;
     }
 
-    public Entry getParent() {
+    public ArtWork getParent() {
         return parent;
     }
 
-    public void setParent(Entry parent) {
+    public void setParent(ArtWork parent) {
         this.parent = parent;
     }
 
-    public List<EntryDependencyId> getParentStories() {
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public List<ArtworkId> getParentStories() {
         return parentStories;
     }
 
-    public void setParentStories(List<EntryDependencyId> parentStories) {
+    public void setParentStories(List<ArtworkId> parentStories) {
         this.parentStories = parentStories;
     }
 
@@ -305,7 +315,7 @@ public abstract class EntryDependency {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EntryDependency that = (EntryDependency) o;
+        ArtWork that = (ArtWork) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(type, that.type) &&
                 Objects.equals(title, that.title) &&

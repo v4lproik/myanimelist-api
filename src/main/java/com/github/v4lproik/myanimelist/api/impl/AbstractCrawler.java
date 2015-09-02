@@ -1,5 +1,8 @@
 package com.github.v4lproik.myanimelist.api.impl;
 
+import com.github.v4lproik.myanimelist.api.UnitCrawler;
+import com.github.v4lproik.myanimelist.api.models.Item;
+import com.github.v4lproik.myanimelist.api.models.TypeEnum;
 import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -7,14 +10,19 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.countMatches;
 
-public abstract class AbstractInformation {
+public abstract class AbstractCrawler<ITEM extends Item> implements UnitCrawler<ITEM> {
 
     public static final String DOMAIN = "http://myanimelist.net/";
     public static final String USER_AGENT = "iMAL-iOS";
-    static Logger log = Logger.getLogger(AbstractInformation.class.getName());
+    static Logger log = Logger.getLogger(AbstractCrawler.class.getName());
+
+    public abstract ITEM crawl(Integer id) throws IOException;
+
+    public abstract Set<ITEM> crawl(Integer id, Boolean dependency) throws IOException;
 
     protected Integer getIdFromLink(String link) {
         try {
@@ -42,6 +50,28 @@ public abstract class AbstractInformation {
         return null;
     }
 
+    protected String getInfoFromLink(String link) {
+        try {
+            if (link.startsWith("http") || link.startsWith("https"))
+                return link.split("/")[3].split("/")[2];
+            else
+                return link.split("/")[1].split("/")[2];
+        } catch (Exception e){
+            log.debug(String.format("Error parsing type from link : %s", link));
+        }
+
+        return null;
+    }
+
+    protected String createEntryURL(Integer id, TypeEnum type){
+
+        if (id == null || type == null){
+            throw new IllegalArgumentException("Id or Type cannot be null");
+        }
+
+        return DOMAIN + type.toString() + "/" + id.toString() + "/";
+    }
+
     public Document getResultFromJSoup(String url, String type) throws IOException {
         log.debug("Trying to get result from " + url);
 
@@ -67,5 +97,4 @@ public abstract class AbstractInformation {
 
         return doc;
     }
-
 }

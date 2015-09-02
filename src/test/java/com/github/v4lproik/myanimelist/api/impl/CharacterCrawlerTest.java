@@ -1,7 +1,8 @@
 package com.github.v4lproik.myanimelist.api.impl;
 
+import com.github.v4lproik.myanimelist.api.models.Character;
+import com.github.v4lproik.myanimelist.api.models.Manga;
 import com.github.v4lproik.myanimelist.api.models.TypeEnum;
-import com.github.v4lproik.myanimelist.entities.Entry;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
@@ -15,45 +16,45 @@ import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CharacterInformationTest{
+public class CharacterCrawlerTest {
 
     @Spy
-    private AnimeMangaInformation serviceAnimeManga;
+    private MangaCrawler mangaCrawler;
 
     @Spy
-    private CharacterInformation serviceCharacter;
+    private CharacterCrawler characterCrawler;
+
 
     @Test
     public void test_crawlCharacter_shouldBeOK() throws Exception {
         // Given
         TypeEnum type = TypeEnum.MANGA;
         final Integer id = 11;
-        String url = serviceAnimeManga.createEntryURL(id, type);
+        String url = mangaCrawler.createEntryURL(id, type);
 
         File input = new File("src/test/resource/naruto.manga");
         Document doc = Jsoup.parse(input, "UTF-8", url);
 
-        doReturn(doc).when(serviceAnimeManga).getResultFromJSoup(url, type.toString());
+        doReturn(doc).when(mangaCrawler).getResultFromJSoup(url, type.toString());
 
         // When
-        Entry response = serviceAnimeManga.crawl(id, type);
-
+        Manga manga = mangaCrawler.crawl(id);
 
         input = new File("src/test/resource/naruto-uzumaki.character");
         doc = Jsoup.parse(input, "UTF-8", url);
 
 
-        Integer idCharacter = response.getCharacters().get(0).getId();
-        url = serviceCharacter.createCharacterURL(idCharacter);
+        Integer idCharacter = manga.getCharacters().get(0).getId();
+        url = characterCrawler.createCharacterURL(idCharacter);
 
-        doReturn(doc).when(serviceCharacter).getResultFromJSoup(url, serviceCharacter.CHARACTER_TYPE);
+        doReturn(doc).when(characterCrawler).getResultFromJSoup(url, characterCrawler.CHARACTER_TYPE);
 
         // When
-        com.github.v4lproik.myanimelist.entities.Character responseCharacter = serviceCharacter.crawl(idCharacter);
+        com.github.v4lproik.myanimelist.api.models.Character responseCharacter = characterCrawler.crawl(idCharacter);
 
         //Then
-        assertEquals("Naruto", response.getTitle());
-        assertEquals("http://cdn.myanimelist.net/images/manga/3/117681.jpg", response.getPosterImage());
+        assertEquals("Naruto", manga.getTitle());
+        assertEquals("http://cdn.myanimelist.net/images/manga/3/117681.jpg", manga.getPosterImage());
         assertEquals("うずまきナルト", responseCharacter.getJapaneseName());
     }
 
@@ -62,9 +63,9 @@ public class CharacterInformationTest{
         // Given
         TypeEnum type = TypeEnum.MANGA;
         final Integer id = -1;
-        String url = serviceAnimeManga.createEntryURL(id, type);
+        String url = mangaCrawler.createEntryURL(id, type);
 
         // When
-        com.github.v4lproik.myanimelist.entities.Character responseCharacter = serviceCharacter.crawl(id);
+        Character responseCharacter = characterCrawler.crawl(id);
     }
 }
