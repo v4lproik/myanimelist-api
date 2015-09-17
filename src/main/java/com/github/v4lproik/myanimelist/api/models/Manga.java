@@ -1,9 +1,9 @@
-package com.github.v4lproik.myanimelist.entities;
+package com.github.v4lproik.myanimelist.api.models;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class MangaDependency extends EntryDependency {
+public class Manga extends ArtWork {
 
     private Integer nbVolumes;
 
@@ -11,13 +11,13 @@ public class MangaDependency extends EntryDependency {
 
     private String serialization;
 
-    public MangaDependency(Integer nbVolumes, Integer mbChapters, String serialization) {
+    public Manga(Integer nbVolumes, Integer mbChapters, String serialization) {
         this.nbVolumes = nbVolumes;
         this.mbChapters = mbChapters;
         this.serialization = serialization;
     }
 
-    public MangaDependency(Integer id) {
+    public Manga(Integer id) {
         super(id);
         setType("manga");
     }

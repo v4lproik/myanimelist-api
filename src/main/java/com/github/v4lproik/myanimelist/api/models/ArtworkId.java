@@ -1,19 +1,19 @@
-package com.github.v4lproik.myanimelist.entities;
+package com.github.v4lproik.myanimelist.api.models;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class EntryDependencyId {
+public class ArtworkId {
 
     private int id;
 
-    private String englishTitle;
+    private String title;
 
     private String type;
 
-    public EntryDependencyId() {
+    public ArtworkId() {
     }
 
-    public EntryDependencyId(int id) {
+    public ArtworkId(int id) {
         this.id = id;
     }
 
@@ -25,12 +25,12 @@ public class EntryDependencyId {
         this.id = id;
     }
 
-    public String getEnglishTitle() {
-        return englishTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setEnglishTitle(String englishTitle) {
-        this.englishTitle = englishTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getType() {
@@ -45,7 +45,7 @@ public class EntryDependencyId {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("englishTitle", englishTitle)
+                .append("title", title)
                 .append("type", type)
                 .toString();
     }

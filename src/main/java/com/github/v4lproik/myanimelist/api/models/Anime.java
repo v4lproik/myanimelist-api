@@ -1,9 +1,9 @@
-package com.github.v4lproik.myanimelist.entities;
+package com.github.v4lproik.myanimelist.api.models;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class Anime extends Entry {
+public class Anime extends ArtWork {
 
     private String[] producers;
 
@@ -72,6 +72,4 @@ public class Anime extends Entry {
     public boolean isManga() {
         return false;
     }
-
-
 }

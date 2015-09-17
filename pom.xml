@@ -6,7 +6,7 @@
 
     <groupId>com.github.v4lproik</groupId>
     <artifactId>myanimelist-api</artifactId>
-    <version>0.1.4-SNAPSHOT</version>
+    <version>0.1.5-SNAPSHOT</version>
 
     <properties>
         <jsoup.version>1.8.2</jsoup.version>
@@ -15,6 +15,7 @@
         <apache-beanutils.version>1.9.2</apache-beanutils.version>
         <junit.version>4.11</junit.version>
         <mockito.version>1.10.19</mockito.version>
+        <spring.version>4.2.1.RELEASE</spring.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -69,6 +70,11 @@
             <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
         </dependency>
     </dependencies>
 </project>
