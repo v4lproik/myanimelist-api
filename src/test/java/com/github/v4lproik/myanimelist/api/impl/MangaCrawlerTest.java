@@ -21,7 +21,7 @@ import static org.mockito.Mockito.doReturn;
 @RunWith(MockitoJUnitRunner.class)
 public class MangaCrawlerTest {
     // Grab new data straight from myanimelist
-    private final Boolean CRAWL_WEBSITE = false;
+    private final Boolean CRAWL_WEBSITE = true;
 
     @Spy
     private MangaCrawler mangaCrawler;

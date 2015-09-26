@@ -355,7 +355,7 @@ public class AnimeCrawler extends AbstractCrawler<Anime> implements UnitCrawler<
 
     private String getMainTitle(Document doc) {
         Element firstH1 = doc.select("h1").first();
-        return firstH1.childNodes().get(2).childNodes().get(0).toString();
+        return firstH1.childNodes().get(0).childNodes().get(0).toString();
     }
 
     private List<Author> getAuthorsBasicInfo(Element h2) {
