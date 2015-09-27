@@ -1,6 +1,7 @@
 package com.github.v4lproik.myanimelist.api.impl;
 
 import com.github.v4lproik.myanimelist.api.UnitCrawler;
+import com.github.v4lproik.myanimelist.api.models.ArtWork;
 import com.github.v4lproik.myanimelist.api.models.Item;
 import com.github.v4lproik.myanimelist.api.models.TypeEnum;
 import org.apache.log4j.Logger;
@@ -22,7 +23,7 @@ public abstract class AbstractCrawler<ITEM extends Item> implements UnitCrawler<
 
     public abstract ITEM crawl(Integer id) throws IOException;
 
-    public abstract Set<ITEM> crawl(Integer id, Boolean dependency) throws IOException;
+    public abstract Set<ArtWork> crawl(Integer id, Boolean dependency) throws IOException;
 
     protected Integer getIdFromLink(String link) {
         try {

@@ -1,6 +1,7 @@
 package com.github.v4lproik.myanimelist.api.impl;
 
 import com.github.v4lproik.myanimelist.api.UnitCrawler;
+import com.github.v4lproik.myanimelist.api.models.ArtWork;
 import com.github.v4lproik.myanimelist.api.models.Character;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -35,7 +36,7 @@ public class CharacterCrawler extends AbstractCrawler<Character> implements Unit
     }
 
     @Override
-    public Set<Character> crawl(Integer id, Boolean dependency) throws IOException {
+    public Set<ArtWork> crawl(Integer id, Boolean dependency) throws IOException {
         return null;
     }
 

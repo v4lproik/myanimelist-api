@@ -45,8 +45,8 @@ public class AnimeCrawler extends AbstractCrawler<Anime> implements UnitCrawler<
     }
 
     @Override
-    public Set<Anime> crawl(Integer id, Boolean dependency) throws IOException {
-        return null;
+    public Set<ArtWork> crawl(Integer id, Boolean dependency) throws IOException {
+        return new ArtWorksCrawler().crawl(id, dependency);
     }
 
     public Anime scrap(Document doc, String url, String type){
