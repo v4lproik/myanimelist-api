@@ -6,7 +6,7 @@
 
     <groupId>com.github.v4lproik</groupId>
     <artifactId>myanimelist-api</artifactId>
-    <version>0.1.6-SNAPSHOT</version>
+    <version>0.1.7-SNAPSHOT</version>
 
     <properties>
         <jsoup.version>1.8.2</jsoup.version>
