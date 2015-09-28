@@ -1,13 +1,11 @@
 package com.github.v4lproik.myanimelist.api.impl;
 
 import com.github.v4lproik.myanimelist.api.UnitCrawler;
-import com.github.v4lproik.myanimelist.api.models.ArtWork;
 import com.github.v4lproik.myanimelist.api.models.Character;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.Set;
 
 public class CharacterCrawler extends AbstractCrawler<Character> implements UnitCrawler<Character> {
 
@@ -33,11 +31,6 @@ public class CharacterCrawler extends AbstractCrawler<Character> implements Unit
         }
 
         return scrapCharacter(doc, null);
-    }
-
-    @Override
-    public Set<ArtWork> crawl(Integer id, Boolean dependency) throws IOException {
-        return null;
     }
 
     private Character scrapCharacter(Document doc, Character character){

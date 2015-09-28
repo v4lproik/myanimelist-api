@@ -21,7 +21,7 @@ import static org.mockito.Mockito.doReturn;
 @RunWith(MockitoJUnitRunner.class)
 public class AnimeCrawlerTest {
     // Grab new data straight from myanimelist
-    private final Boolean CRAWL_WEBSITE = false;
+    private final Boolean CRAWL_WEBSITE = true;
 
     @Spy
     private AnimeCrawler animeCrawler;
@@ -33,20 +33,23 @@ public class AnimeCrawlerTest {
         Integer id = 2904;
         String url = animeCrawler.createEntryURL(id, type);
 
-        Document doc = null;
-        if (CRAWL_WEBSITE){
-            doc = animeCrawler.getResultFromJSoup("http://myanimelist.net/anime/2904/", "anime");
-            if (doc != null){
-                Files.write(Paths.get("src/test/resource/code-geass-r2.anime"), doc.html().getBytes());
-            }else{
-                throw new IOException("Unit Test cannot be performed");
-            }
-        }
-
-        File input = new File("src/test/resource/code-geass-r2.anime");
-        doc = Jsoup.parse(input, "UTF-8", url);
-
-        doReturn(doc).when(animeCrawler).getResultFromJSoup(url, type.toString());
+//        Document doc = null;
+//        if (CRAWL_WEBSITE){
+//            doc = animeCrawler.getResultFromJSoup("http://myanimelist.net/anime/2904/", "anime");
+//            if (doc != null){
+//                Path logFile = Paths.get("src/test/resource/code-geass-r2.anime");
+//                try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardCharsets.UTF_16)) {
+//                    writer.write(doc.html());
+//                }
+//            }else{
+//                throw new IOException("Unit Test cannot be performed");
+//            }
+//        }
+//
+//        File input = new File("src/test/resource/code-geass-r2.anime");
+//        doc = Jsoup.parse(input, "UTF-16", url);
+//
+//        doReturn(doc).when(animeCrawler).getResultFromJSoup(url, type.toString());
 
         // When
         Anime anime = animeCrawler.crawl(id);
@@ -104,7 +107,14 @@ public class AnimeCrawlerTest {
         assertEquals("Naruto", anime.getTitle());
         assertEquals("20", anime.getId().toString());
         assertEquals("anime", anime.getType());
-
+        assertEquals(true, anime.getAgeRating().length() > 0);
+        assertEquals(true, anime.getGenres().length > 0);
+        assertEquals(true, anime.getPosterImage().length() > 0);
+        assertEquals(true, anime.getAuthors().size() > 0);
+        assertEquals(true, anime.getSequels().size() > 0);
+        assertEquals(true, anime.getAdaptations().size() > 0);
+        assertEquals(true, anime.getSideStories().size() > 0);
+        assertEquals(true, anime.getCharacters().size() > 0);
     }
 
     @Test(expected = IOException.class)

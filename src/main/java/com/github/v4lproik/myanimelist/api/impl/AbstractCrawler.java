@@ -1,7 +1,6 @@
 package com.github.v4lproik.myanimelist.api.impl;
 
 import com.github.v4lproik.myanimelist.api.UnitCrawler;
-import com.github.v4lproik.myanimelist.api.models.ArtWork;
 import com.github.v4lproik.myanimelist.api.models.Item;
 import com.github.v4lproik.myanimelist.api.models.TypeEnum;
 import org.apache.log4j.Logger;
@@ -11,7 +10,6 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.Random;
-import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.countMatches;
 
@@ -22,8 +20,6 @@ public abstract class AbstractCrawler<ITEM extends Item> implements UnitCrawler<
     static Logger log = Logger.getLogger(AbstractCrawler.class.getName());
 
     public abstract ITEM crawl(Integer id) throws IOException;
-
-    public abstract Set<ArtWork> crawl(Integer id, Boolean dependency) throws IOException;
 
     protected Integer getIdFromLink(String link) {
         try {

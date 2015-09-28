@@ -11,17 +11,9 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class AnimeCrawler extends AbstractCrawler<Anime> implements UnitCrawler<Anime> {
-
-    List<Integer> animeScrapped = new ArrayList<Integer>();
-    List<Integer> animeErrorScrapped = new ArrayList<Integer>();
-    Set<ArtWork> animes = new HashSet<ArtWork>();
-    ArtWork root;
-    ArtworkFactory artworkFactory = new ArtworkFactory();
 
     @Override
     public Anime crawl(Integer id) throws IOException {
@@ -41,12 +33,7 @@ public class AnimeCrawler extends AbstractCrawler<Anime> implements UnitCrawler<
             throw new IOException(String.format("No data fetched for url %s", url));
         }
 
-        return (Anime) scrap(doc, url, type.toString());
-    }
-
-    @Override
-    public Set<ArtWork> crawl(Integer id, Boolean dependency) throws IOException {
-        return new ArtWorksCrawler().crawl(id, dependency);
+        return scrap(doc, url, type.toString());
     }
 
     public Anime scrap(Document doc, String url, String type){
@@ -76,10 +63,10 @@ public class AnimeCrawler extends AbstractCrawler<Anime> implements UnitCrawler<
 
         Elements tds = doc.select("td");
         for (Element td : tds) {
-            if (td.text().startsWith("Edit Synopsis")) {
-                anime.setSynopsis(td.text().substring(13, td.text().length()));
+            if (td.text().startsWith("EditSynopsis")) {
+                anime.setSynopsis(td.text().substring(12, td.text().length()));
             }else {
-                if (td.text().startsWith("Edit Related")) {
+                if (td.text().startsWith("EditRelated")) {
 
                     Elements elts = td.select("table").select("td");
 
@@ -302,7 +289,7 @@ public class AnimeCrawler extends AbstractCrawler<Anime> implements UnitCrawler<
             }
         }
 
-        pattern = "More characters Characters & Voice Actors";
+        pattern = "More charactersCharacters & Voice Actors";
 
         Elements h2s = doc.select("h2");
         for (Element h2 : h2s) {
@@ -318,7 +305,7 @@ public class AnimeCrawler extends AbstractCrawler<Anime> implements UnitCrawler<
                     anime.setCharacters(getCharactersBasicInfo(h2));
 
                 }else {
-                    if (h2.text().startsWith("More staff Staff")) {
+                    if (h2.text().startsWith("More staffStaff")) {
                         log.debug("Authors have been found");
 
                         anime.setAuthors(getAuthorsBasicInfo(h2));
@@ -411,7 +398,7 @@ public class AnimeCrawler extends AbstractCrawler<Anime> implements UnitCrawler<
 
                     String characterFullName = userinfo.get(1).childNodes().get(0).toString();
                     Integer idCharacter = getIdFromLink(tr.attr("href"));
-                    String role = userinfo.get(3).childNodes().get(1).childNodes().get(0).toString();
+                    String role = userinfo.get(3).childNodes().get(0).toString();
 
                     String[] parts = characterFullName.split(", ");
 
@@ -443,7 +430,7 @@ public class AnimeCrawler extends AbstractCrawler<Anime> implements UnitCrawler<
 
     private List<ArtworkId> getRelated(ArtWork artWork, Element elt) throws Exception{
         String type;
-        List<Node> links = elt.parentNode().childNodes().get(3).childNodes();
+        List<Node> links = elt.parentNode().childNodes().get(1).childNodes();
         List<ArtworkId> relatedEntities = new ArrayList<>();
 
         for (Node link : links) {

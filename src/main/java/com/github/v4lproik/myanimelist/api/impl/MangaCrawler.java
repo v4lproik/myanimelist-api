@@ -12,7 +12,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class MangaCrawler extends AbstractCrawler<Manga> implements UnitCrawler<Manga> {
 
@@ -35,11 +34,6 @@ public class MangaCrawler extends AbstractCrawler<Manga> implements UnitCrawler<
         }
 
         return (Manga) scrap(doc, url, type.toString());
-    }
-
-    @Override
-    public Set<ArtWork> crawl(Integer id, Boolean dependency) throws IOException {
-        return new ArtWorksCrawler().crawl(id, dependency);
     }
 
     public ArtWork scrap(Document doc, String url, String type){
@@ -68,10 +62,10 @@ public class MangaCrawler extends AbstractCrawler<Manga> implements UnitCrawler<
 
         Elements tds = doc.select("td");
         for (Element td : tds) {
-            if (td.text().startsWith("Edit Synopsis")) {
-                manga.setSynopsis(td.text().substring(13, td.text().length()));
+            if (td.text().startsWith("EditSynopsis")) {
+                manga.setSynopsis(td.text().substring(12, td.text().length()));
             }else {
-                if (td.text().startsWith("Edit Related")) {
+                if (td.text().startsWith("EditRelated")) {
 
                     Elements elts = td.select("table").select("td");
 
@@ -296,7 +290,7 @@ public class MangaCrawler extends AbstractCrawler<Manga> implements UnitCrawler<
             }
         }
 
-        pattern = manga.getType().equals("manga") ? "More characters Characters" : "More characters Characters & Voice Actors";
+        pattern = manga.getType().equals("manga") ? "More charactersCharacters" : "More charactersCharacters & Voice Actors";
 
         Elements h2s = doc.select("h2");
         for (Element h2 : h2s) {
@@ -313,7 +307,7 @@ public class MangaCrawler extends AbstractCrawler<Manga> implements UnitCrawler<
 
                 }else {
                     //Add authors for anime
-                    if (h2.text().startsWith("More staff Staff")) {
+                    if (h2.text().startsWith("More staffStaff")) {
                         log.debug("Authors have been found");
 
                         manga.setAuthors(getAuthorsBasicInfo(h2));
@@ -406,7 +400,7 @@ public class MangaCrawler extends AbstractCrawler<Manga> implements UnitCrawler<
 
                     String characterFullName = userinfo.get(1).childNodes().get(0).toString();
                     Integer idCharacter = getIdFromLink(tr.attr("href"));
-                    String role = userinfo.get(3).childNodes().get(1).childNodes().get(0).toString();
+                    String role = userinfo.get(3).childNodes().get(0).toString();
 
                     String[] parts = characterFullName.split(", ");
 
@@ -438,7 +432,7 @@ public class MangaCrawler extends AbstractCrawler<Manga> implements UnitCrawler<
 
     private List<ArtworkId> getRelated(ArtWork artWork, Element elt) throws Exception{
         String type;
-        List<Node> links = elt.parentNode().childNodes().get(3).childNodes();
+        List<Node> links = elt.parentNode().childNodes().get(1).childNodes();
         List<ArtworkId> relatedEntities = new ArrayList<>();
 
         for (Node link : links) {
